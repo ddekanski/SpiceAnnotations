@@ -23,8 +23,6 @@ import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.WindowFeature;
 import org.springframework.util.StringUtils;
 
-import eu.tenex.rsaasample.app.R;
-
 @EActivity(R.layout.activity_main)
 @WindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS)
 public class MainActivity extends Activity implements RequestListener<FacebookPage> {
