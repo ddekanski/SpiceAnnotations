@@ -101,7 +101,7 @@ public class MainActivity extends Activity implements RequestListener<FacebookPa
     @Override
     public void onRequestFailure(SpiceException spiceException) {
         setProgressBarIndeterminateVisibility(false);
-        final String msg = spiceException.getMessage();
+        final String msg = spiceException.getCause().getMessage();
         showMsg("Error: " + msg);
     }
 
