@@ -2,6 +2,7 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <item name="android:windowNoTitle">false</item>
         <item name="android:windowBackground">@android:color/white</item>
     </style>
 
