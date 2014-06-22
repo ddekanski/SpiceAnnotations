@@ -1,6 +1,6 @@
 package com.github.ddekanski.spiceannotations;
 
-import android.app.Activity;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
@@ -25,7 +25,7 @@ import org.springframework.util.StringUtils;
 
 @EActivity(R.layout.activity_main)
 @WindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS)
-public class MainActivity extends Activity implements RequestListener<FacebookPage> {
+public class MainActivity extends ActionBarActivity implements RequestListener<FacebookPage> {
 
     @ViewById
     EditText pageNameInput;
