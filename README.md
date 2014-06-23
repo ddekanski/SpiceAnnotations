@@ -1,4 +1,4 @@
 SpiceAnnotations
 ================
 
-Combining RoboSpice &amp; AndroidAnnotations in one app
+This is a simple app showing how to use both AndroidAnnotations and RoboSpice frameworks in one project.
