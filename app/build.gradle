@@ -10,13 +10,9 @@ apply plugin: 'android'
 
 repositories {
     mavenCentral()
-
-    maven {
-        url 'https://oss.sonatype.org/content/repositories/snapshots/'
-    }
 }
 
-ext.androidAnnotationsVersion = '3.1-SNAPSHOT';
+ext.androidAnnotationsVersion = '3.2';
 
 configurations {
     apt
