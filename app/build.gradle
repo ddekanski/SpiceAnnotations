@@ -3,19 +3,23 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.9.+'
+        classpath 'com.android.tools.build:gradle:0.13.2'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4+'
     }
 }
-apply plugin: 'android'
+
+apply plugin: 'com.android.application'
+apply plugin: 'android-apt'
+def AAVersion = '3.2'
+
+apt {
+    arguments {
+        androidManifestFile variant.processResources.manifestFile
+    }
+}
 
 repositories {
     mavenCentral()
-}
-
-ext.androidAnnotationsVersion = '3.2';
-
-configurations {
-    apt
 }
 
 dependencies {
@@ -28,13 +32,13 @@ dependencies {
     compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.3.3'
 
-    apt "org.androidannotations:androidannotations:${androidAnnotationsVersion}"
-    compile "org.androidannotations:androidannotations-api:${androidAnnotationsVersion}"
+    apt "org.androidannotations:androidannotations:$AAVersion"
+    compile "org.androidannotations:androidannotations-api:$AAVersion"
 }
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "21.1.1"
+    buildToolsVersion "19.1.0"
 
     defaultConfig {
         minSdkVersion 10
@@ -69,36 +73,4 @@ android {
         exclude 'META-INF/LGPL2.1'
     }
 
-}
-
-def getSourceSetName(variant) {
-    return new File(variant.dirName).getName();
-}
-//!!!! DIFFERENT  is here!!!!
-// android.applicationVariants.each to  android.applicationVariants.all
-android.applicationVariants.all { variant ->
-    def aptOutputDir = project.file("build/source/apt")
-    def aptOutput = new File(aptOutputDir, variant.dirName)
-    println "****************************"
-    println "variant: ${variant.name}"
-    println "manifest:  ${variant.processResources.manifestFile}"
-    println "aptOutput:  ${aptOutput}"
-    println "****************************"
-
-    android.sourceSets[getSourceSetName(variant)].java.srcDirs += aptOutput.getPath()
-
-    variant.javaCompile.options.compilerArgs += [
-            '-processorpath', configurations.apt.getAsPath(),
-            '-processor', 'org.androidannotations.AndroidAnnotationProcessor',
-            '-AandroidManifestFile=' + variant.processResources.manifestFile,
-            '-s', aptOutput
-    ]
-
-    variant.javaCompile.source = variant.javaCompile.source.filter { p ->
-        return !p.getPath().startsWith(aptOutputDir.getPath())
-    }
-
-    variant.javaCompile.doFirst {
-        aptOutput.mkdirs()
-    }
 }
